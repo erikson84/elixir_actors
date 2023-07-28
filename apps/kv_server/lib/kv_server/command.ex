@@ -46,8 +46,10 @@ defmodule KVServer.Command do
   def run(command)
 
   def run({:create, bucket}) do
-    KV.Registry.create(KV.Registry, bucket)
-    {:ok, "OK\r\n"}
+    case KV.Router.route(bucket, KV.Registry, :create, [KV.Registry, bucket]) do
+      pid when is_pid(pid) -> {:ok, "OK\r\n"}
+      _ -> {:error, "FAILED TO CREATE BUCKET"}
+    end
   end
 
   def run({:get, bucket, item}) do
