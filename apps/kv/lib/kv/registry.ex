@@ -9,7 +9,6 @@ defmodule KV.Registry do
   """
   @type registry :: pid
 
-  @spec start_link([any]) :: {:ok, registry()}
   @doc """
   Starts the registry with given `opts`.
   `:name` is always required
@@ -19,7 +18,6 @@ defmodule KV.Registry do
     GenServer.start_link(__MODULE__, server, opts)
   end
 
-  @spec lookup(registry() | atom(), String.t()) :: {:ok, KV.Bucket.bucket()} | :error
   @doc """
   Retrieves the bucket `name` on the `registry` server.
 
@@ -32,7 +30,6 @@ defmodule KV.Registry do
     end
   end
 
-  @spec create(registry(), String.t()) :: :ok
   @doc """
   Create a new bucket `name` on the `registry` server.
   """
@@ -41,7 +38,6 @@ defmodule KV.Registry do
   end
 
   @impl true
-  @spec init(atom) :: {:ok, {atom | :ets.tid(), %{}}}
   def init(table) do
     names = :ets.new(table, [:named_table, read_concurrency: true])
     refs = %{}
