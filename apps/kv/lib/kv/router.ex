@@ -1,4 +1,4 @@
-defmodule Kv.Router do
+defmodule KV.Router do
   @doc """
   Dispatch the given `mod`, `fun`, `args` requests
   to the appropriate node based on `bucket`.
